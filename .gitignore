@@ -1,0 +1,9 @@
+/.idea
+/dist
+/node_modules
+.env
+/frontend/node_modules
+backend/node_modules
+backend/dist
+/mongo_db
+node-js_test-project_clinics.iml

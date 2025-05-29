@@ -7,7 +7,7 @@ import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 
-// import { config } from "./configs/config";
+import { config } from "./configs/config";
 // import { cronRunner } from "./crons";
 import { ApiError } from "./errors/api.error";
 import { apiRouter } from "./routers/api.router";
@@ -37,10 +37,7 @@ const dbConnection = async () => {
     while (!dbCon) {
         try {
             console.log("Connecting to DB...");
-            // console.log(config.MONGO_URI);
-            await mongoose.connect(
-                "mongodb+srv://admin1:admin1Pass@cluster0.je8wp.mongodb.net/nodejs-test-db",
-            );
+            await mongoose.connect(process.env.MONGO_URI);
             dbCon = true;
             console.log("Database available!!!");
         } catch (e) {
@@ -53,8 +50,8 @@ const dbConnection = async () => {
 const start = async () => {
     try {
         await dbConnection();
-        app.listen(7000, async () => {
-            console.log(`Server is listening on ${7000}`);
+        app.listen(config.PORT, async () => {
+            console.log(`Server is listening on ${config.PORT}`);
             // await cronRunner();
         });
     } catch (e) {

@@ -42,11 +42,11 @@ class UserRepository {
     }
 
     public blockUser(userId: string): Promise<IUser> {
-        return User.findByIdAndUpdate(userId, { isActive: false }, { new: true });
+        return User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
     }
 
     public unbBlockUser(userId: string): Promise<IUser> {
-        return User.findByIdAndUpdate(userId, { isActive: true }, { new: true });
+        return User.findByIdAndUpdate(userId, { isBlocked: false }, { new: true });
     }
 }
 

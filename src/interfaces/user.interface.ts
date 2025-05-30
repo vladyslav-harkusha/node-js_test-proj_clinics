@@ -10,9 +10,9 @@ interface IUser extends IBase {
     surname: string;
     age: number;
     avatar: string;
-    isActive: boolean;
-    isDeleted: boolean;
     isVerified: boolean;
+    isBlocked: boolean;
+    isDeleted: boolean;
 }
 
 interface IUserQuery {

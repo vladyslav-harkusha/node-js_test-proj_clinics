@@ -49,8 +49,12 @@ class AuthService {
             throw new ApiError("Invalid email or password", StatusCodesEnum.UNAUTHORIZED);
         }
 
-        if (!user.isActive) {
-            throw new ApiError("Account is not active", StatusCodesEnum.FORBIDDEN);
+        if (!user.isVerified) {
+            throw new ApiError("Account is not verified", StatusCodesEnum.UNAUTHORIZED);
+        }
+
+        if (user.isBlocked) {
+            throw new ApiError("Account was blocked by admin", StatusCodesEnum.FORBIDDEN);
         }
 
         const tokens = tokenService.generateTokens({
@@ -62,10 +66,10 @@ class AuthService {
         return { user, tokens };
     }
 
-    public async activate(token: string): Promise<IUser> {
+    public async verifyAccount(token: string): Promise<IUser> {
         const { userId } = tokenService.verifyToken(token, ActionTokenTypeEnum.ACTIVATE);
 
-        return await userService.updateById(userId, { isActive: true, isVerified: true });
+        return await userService.updateById(userId, { isVerified: true });
     }
 
     public async passwordRecoveryRequest(user: IUser): Promise<void> {

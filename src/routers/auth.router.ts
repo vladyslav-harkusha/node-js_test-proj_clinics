@@ -17,7 +17,7 @@ router.post(
     authController.refresh,
 );
 router.get("/me", authMiddleware.checkAccessToken, authController.me);
-router.patch("/activate/:token", authController.activate);
+router.patch("/verify/:token", authController.verifyAccount);
 router.post(
     "/recovery",
     commonMiddleware.validateBody(AuthValidator.recoveryEmail),

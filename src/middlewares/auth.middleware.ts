@@ -31,8 +31,8 @@ class AuthMiddleware {
 
             const tokenPayload = tokenService.verifyToken(accessToken, TokenTypeEnum.ACCESS);
 
-            const isActive = await userService.isActive(tokenPayload.userId);
-            if (!isActive) {
+            const { isVerified, isBlocked } = await userService.getById(tokenPayload.userId);
+            if (!isVerified || isBlocked) {
                 throw new ApiError("Account is not active", StatusCodesEnum.FORBIDDEN);
             }
 

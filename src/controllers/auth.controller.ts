@@ -55,10 +55,10 @@ class AuthController {
         }
     }
 
-    public async activate(req: Request, res: Response, next: NextFunction) {
+    public async verifyAccount(req: Request, res: Response, next: NextFunction) {
         try {
             const { token } = req.params;
-            const user = await authService.activate(token);
+            const user = await authService.verifyAccount(token);
 
             res.status(StatusCodesEnum.OK).json(user);
         } catch (e) {

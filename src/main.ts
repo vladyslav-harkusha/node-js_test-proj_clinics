@@ -39,10 +39,10 @@ const dbConnection = async () => {
             console.log("Connecting to DB...");
             await mongoose.connect(process.env.MONGO_URI);
             dbCon = true;
-            console.log("Database available!!!");
+            console.log("Database mongo available!");
         } catch (e) {
-            console.log("Database unavailable, wait 3 seconds");
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            console.log("Database mongo unavailable, wait 4 seconds");
+            await new Promise((resolve) => setTimeout(resolve, 4000));
         }
     }
 };
@@ -51,7 +51,7 @@ const start = async () => {
     try {
         await dbConnection();
         app.listen(config.PORT, async () => {
-            console.log(`Server is listening on ${config.PORT}`);
+            console.log(`Server is listening on port ${config.PORT}`);
             // await cronRunner();
         });
     } catch (e) {

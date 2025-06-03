@@ -17,4 +17,4 @@ const doctorSchema = new Schema(
     },
 );
 
-export const MedicalSpeciality = model<IDoctor>("doctor", doctorSchema);
+export const Doctor = model<IDoctor>("doctor", doctorSchema);

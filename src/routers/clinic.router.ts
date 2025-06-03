@@ -1,0 +1,36 @@
+import { Router } from "express";
+
+import { clinicController } from "../controllers/clinic.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { commonMiddleware } from "../middlewares/common.middleware";
+import { ClinicValidator } from "../validators/clinic.validator";
+import { QueryParamsValidator } from "../validators/query-params.validator";
+
+const router = Router();
+
+router.get("/", commonMiddleware.query(QueryParamsValidator.query), clinicController.getAll);
+router.get("/:id", commonMiddleware.isIdValid("id"), clinicController.getById);
+router.post(
+    "/",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.validateBody(ClinicValidator.create),
+    clinicController.create,
+);
+router.put(
+    "/:id",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    commonMiddleware.validateBody(ClinicValidator.update),
+    clinicController.updateById,
+);
+router.delete(
+    "/:id",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    clinicController.deleteById,
+);
+
+export const clinicRouter = router;

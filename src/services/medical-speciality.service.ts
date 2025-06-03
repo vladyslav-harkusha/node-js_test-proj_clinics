@@ -29,27 +29,27 @@ class MedicalSpecialityService {
         return await medicalSpecialityRepository.create(medSpec);
     }
 
-    public async getById(userId: string): Promise<IMedicalSpeciality> {
-        const user = await medicalSpecialityRepository.getById(userId);
+    public async getById(medSpecId: string): Promise<IMedicalSpeciality> {
+        const medSpec = await medicalSpecialityRepository.getById(medSpecId);
 
-        if (!user) {
+        if (!medSpec) {
             throw new ApiError("Medical speciality not found", StatusCodesEnum.NOT_FOUND);
         }
 
-        return user;
+        return medSpec;
     }
 
     public async updateById(
-        userId: string,
+        medSpecId: string,
         updateData: Partial<IMedicalSpeciality>,
     ): Promise<IMedicalSpeciality> {
-        const user = await medicalSpecialityRepository.getById(userId);
+        const medSpec = await medicalSpecialityRepository.getById(medSpecId);
 
-        if (!user) {
+        if (!medSpec) {
             throw new ApiError("Medical speciality not found", StatusCodesEnum.NOT_FOUND);
         }
 
-        return await medicalSpecialityRepository.updateById(userId, updateData);
+        return await medicalSpecialityRepository.updateById(medSpecId, updateData);
     }
 
     public async deleteById(medSpecId: string): Promise<void> {

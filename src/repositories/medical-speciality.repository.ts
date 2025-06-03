@@ -13,10 +13,7 @@ class MedicalSpecialityRepository {
         const filterObject: FilterQuery<IMedicalSpeciality> = {};
 
         if (query.search) {
-            filterObject.$or = [
-                { name: { $regex: query.search, $options: "i" } },
-                { surname: { $regex: query.search, $options: "i" } },
-            ];
+            filterObject.$or = [{ name: { $regex: query.search, $options: "i" } }];
         }
 
         return Promise.all([

@@ -13,4 +13,4 @@ const clinicSchema = new Schema(
     },
 );
 
-export const MedicalSpeciality = model<IClinic>("clinic", clinicSchema);
+export const Clinic = model<IClinic>("clinic", clinicSchema);

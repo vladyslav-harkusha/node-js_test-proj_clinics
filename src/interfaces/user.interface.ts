@@ -15,15 +15,8 @@ interface IUser extends IBase {
     isDeleted: boolean;
 }
 
-interface IUserQuery {
-    pageSize: number;
-    page: number;
-    search?: string;
-    order?: string;
-}
-
 type IUserCreateDTO = Pick<IUser, "email" | "password" | "name" | "surname" | "age">;
 type IUserUpdateDTO = Pick<IUser, "name" | "surname" | "age">;
 type IUserSignInDTO = Pick<IUser, "email" | "password">;
 
-export type { IUser, IUserCreateDTO, IUserQuery, IUserSignInDTO, IUserUpdateDTO };
+export type { IUser, IUserCreateDTO, IUserSignInDTO, IUserUpdateDTO };

@@ -1,10 +1,11 @@
 import { FilterQuery } from "mongoose";
 
-import { IUser, IUserCreateDTO, IUserQuery } from "../interfaces/user.interface";
+import { IQueryParams } from "../interfaces/query-params.interface";
+import { IUser, IUserCreateDTO } from "../interfaces/user.interface";
 import { User } from "../models/user.model";
 
 class UserRepository {
-    public getAll(query: IUserQuery): Promise<[IUser[], number]> {
+    public getAll(query: IQueryParams): Promise<[IUser[], number]> {
         const skip = query.pageSize * (query.page - 1);
         const filterObject: FilterQuery<IUser> = { isDeleted: false };
 

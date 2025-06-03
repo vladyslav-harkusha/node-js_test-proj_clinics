@@ -8,6 +8,6 @@ const router = Router();
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-router.use("/specialities", medicalSpecialityRouter);
+router.use("/specialties", medicalSpecialityRouter);
 
 export const apiRouter = router;

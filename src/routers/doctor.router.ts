@@ -32,5 +32,35 @@ router.delete(
     commonMiddleware.isIdValid("id"),
     doctorController.deleteById,
 );
+router.patch(
+    "/:id/clinics",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    doctorController.addClinic,
+);
+router.patch(
+    "/:id/clinics/:clinicId",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    commonMiddleware.isIdValid("clinicId"),
+    doctorController.removeClinic,
+);
+router.patch(
+    "/:id/specialties",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    doctorController.addSpecialty,
+);
+router.patch(
+    "/:id/specialties/:specialtyId",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    commonMiddleware.isIdValid("specialtyId"),
+    doctorController.removeSpecialty,
+);
 
 export const doctorRouter = router;

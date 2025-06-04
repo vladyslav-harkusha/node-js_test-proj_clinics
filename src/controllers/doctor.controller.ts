@@ -57,6 +57,51 @@ class DoctorController {
             next(e);
         }
     }
+
+    public async addClinic(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const { clinicId } = req.body;
+            const data = await doctorService.addClinic(id, clinicId);
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async removeClinic(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const { clinicId } = req.params;
+            console.log(req.params);
+            const data = await doctorService.removeClinic(id, clinicId);
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async addSpecialty(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const { specialtyId } = req.body;
+            const data = await doctorService.addSpecialty(id, specialtyId);
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async removeSpecialty(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const { specialtyId } = req.params;
+            const data = await doctorService.removeSpecialty(id, specialtyId);
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export const doctorController = new DoctorController();

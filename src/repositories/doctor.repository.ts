@@ -19,7 +19,12 @@ class DoctorRepository {
         }
 
         return Promise.all([
-            Doctor.find(filterObject).limit(query.pageSize).skip(skip).sort(query.order),
+            Doctor.find(filterObject)
+                .limit(query.pageSize)
+                .skip(skip)
+                .sort(query.order)
+                .populate("clinics")
+                .populate("specialties"),
             Doctor.find(filterObject).countDocuments(),
         ]);
     }
@@ -29,7 +34,7 @@ class DoctorRepository {
     }
 
     public getById(doctorId: string): Promise<IDoctor> {
-        return Doctor.findById(doctorId);
+        return Doctor.findById(doctorId).populate("clinics");
     }
 
     public updateById(doctorId: string, newDoctor: Partial<IDoctor>): Promise<IDoctor> {
@@ -42,6 +47,38 @@ class DoctorRepository {
 
     public getByEmail(email: string): Promise<IDoctor> {
         return Doctor.findOne({ email });
+    }
+
+    public addClinic(doctorId: string, clinicId: string): Promise<IDoctor> {
+        return Doctor.findByIdAndUpdate(
+            doctorId,
+            { $addToSet: { clinics: clinicId } },
+            { new: true },
+        ).populate("clinics");
+    }
+
+    public removeClinic(doctorId: string, clinicId: string): Promise<IDoctor> {
+        return Doctor.findByIdAndUpdate(
+            doctorId,
+            { $pull: { clinics: clinicId } },
+            { new: true },
+        ).populate("clinics");
+    }
+
+    public addSpecialty(doctorId: string, specialtyId: string): Promise<IDoctor> {
+        return Doctor.findByIdAndUpdate(
+            doctorId,
+            { $addToSet: { specialties: specialtyId } },
+            { new: true },
+        ).populate("specialties");
+    }
+
+    public removeSpecialty(doctorId: string, specialtyId: string): Promise<IDoctor> {
+        return Doctor.findByIdAndUpdate(
+            doctorId,
+            { $pull: { specialties: specialtyId } },
+            { new: true },
+        ).populate("specialties");
     }
 }
 

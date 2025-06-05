@@ -34,7 +34,7 @@ class DoctorRepository {
     }
 
     public getById(doctorId: string): Promise<IDoctor> {
-        return Doctor.findById(doctorId).populate("clinics");
+        return Doctor.findById(doctorId);
     }
 
     public updateById(doctorId: string, newDoctor: Partial<IDoctor>): Promise<IDoctor> {

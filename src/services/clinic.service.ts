@@ -67,8 +67,13 @@ class ClinicService {
 
     public async addDoctor(clinicId: string, doctorId: string): Promise<IClinic> {
         const clinic = await clinicRepository.getById(clinicId);
+        const doctor = await doctorRepository.getById(doctorId);
+
         if (!clinic) {
             throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
+        }
+        if (!doctor) {
+            throw new ApiError("Doctor not found", StatusCodesEnum.NOT_FOUND);
         }
 
         if (clinic.doctors.includes(doctorId)) {
@@ -85,8 +90,13 @@ class ClinicService {
 
     public async removeDoctor(clinicId: string, doctorId: string): Promise<IClinic> {
         const clinic = await clinicRepository.getById(clinicId);
+        const doctor = await doctorRepository.getById(doctorId);
+
         if (!clinic) {
             throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
+        }
+        if (!doctor) {
+            throw new ApiError("Doctor not found", StatusCodesEnum.NOT_FOUND);
         }
 
         if (!clinic.doctors.includes(doctorId)) {

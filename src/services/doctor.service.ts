@@ -63,13 +63,20 @@ class DoctorService {
 
     public async addClinic(doctorId: string, clinicId: string): Promise<IDoctor> {
         const doctor = await doctorRepository.getById(doctorId);
+        const clinic = await clinicRepository.getById(clinicId);
+
         if (!doctor) {
             throw new ApiError("Doctor not found", StatusCodesEnum.NOT_FOUND);
         }
-
-        const clinic = await clinicRepository.getById(clinicId);
         if (!clinic) {
             throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
+        }
+
+        if (doctor.clinics.includes(clinicId)) {
+            throw new ApiError(
+                `Clinic with ID=${clinicId} is already exists in current doctor`,
+                StatusCodesEnum.BAD_REQUEST,
+            );
         }
 
         await clinicRepository.addDoctor(clinicId, doctorId);
@@ -79,13 +86,20 @@ class DoctorService {
 
     public async removeClinic(doctorId: string, clinicId: string): Promise<IDoctor> {
         const doctor = await doctorRepository.getById(doctorId);
+        const clinic = await clinicRepository.getById(clinicId);
+
         if (!doctor) {
             throw new ApiError("Doctor not found", StatusCodesEnum.NOT_FOUND);
         }
-
-        const clinic = await clinicRepository.getById(clinicId);
         if (!clinic) {
             throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
+        }
+
+        if (!doctor.clinics.includes(clinicId)) {
+            throw new ApiError(
+                `Clinic with ID=${doctorId} not found in current doctor`,
+                StatusCodesEnum.NOT_FOUND,
+            );
         }
 
         await clinicRepository.removeDoctor(clinicId, doctorId);
@@ -95,13 +109,20 @@ class DoctorService {
 
     public async addSpecialty(doctorId: string, specialtyId: string): Promise<IDoctor> {
         const doctor = await doctorRepository.getById(doctorId);
+        const specialty = await medicalSpecialityRepository.getById(specialtyId);
+
         if (!doctor) {
             throw new ApiError("Doctor not found", StatusCodesEnum.NOT_FOUND);
         }
-
-        const specialty = await medicalSpecialityRepository.getById(specialtyId);
         if (!specialty) {
             throw new ApiError("Specialty not found", StatusCodesEnum.NOT_FOUND);
+        }
+
+        if (doctor.specialties.includes(specialtyId)) {
+            throw new ApiError(
+                `This doctor already has a speciality with ID=${specialtyId}`,
+                StatusCodesEnum.BAD_REQUEST,
+            );
         }
 
         return await doctorRepository.addSpecialty(doctorId, specialtyId);
@@ -109,13 +130,20 @@ class DoctorService {
 
     public async removeSpecialty(doctorId: string, specialtyId: string): Promise<IDoctor> {
         const doctor = await doctorRepository.getById(doctorId);
+        const specialty = await medicalSpecialityRepository.getById(specialtyId);
+
         if (!doctor) {
             throw new ApiError("Doctor not found", StatusCodesEnum.NOT_FOUND);
         }
-
-        const specialty = await medicalSpecialityRepository.getById(specialtyId);
         if (!specialty) {
             throw new ApiError("Specialty not found", StatusCodesEnum.NOT_FOUND);
+        }
+
+        if (doctor.specialties.includes(specialtyId)) {
+            throw new ApiError(
+                `This doctor does not have a speciality with ID=${specialtyId}`,
+                StatusCodesEnum.NOT_FOUND,
+            );
         }
 
         return await doctorRepository.removeSpecialty(doctorId, specialtyId);

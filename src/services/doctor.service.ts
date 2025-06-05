@@ -72,6 +72,8 @@ class DoctorService {
             throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
         }
 
+        await clinicRepository.addDoctor(clinicId, doctorId);
+
         return await doctorRepository.addClinic(doctorId, clinicId);
     }
 
@@ -85,6 +87,8 @@ class DoctorService {
         if (!clinic) {
             throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
         }
+
+        await clinicRepository.removeDoctor(clinicId, doctorId);
 
         return await doctorRepository.removeClinic(doctorId, clinicId);
     }

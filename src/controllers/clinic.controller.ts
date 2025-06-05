@@ -57,6 +57,28 @@ class ClinicController {
             next(e);
         }
     }
+
+    public async addDoctor(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const { doctorId } = req.body;
+            const data = await clinicService.addDoctor(id, doctorId);
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async removeDoctor(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const { doctorId } = req.params;
+            const data = await clinicService.removeDoctor(id, doctorId);
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export const clinicController = new ClinicController();

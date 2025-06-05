@@ -4,6 +4,7 @@ import { IClinic, IClinicCreateDTO } from "../interfaces/clinic.interface";
 import { IPaginatedResponse } from "../interfaces/paginated-response.interface";
 import { IQueryParams } from "../interfaces/query-params.interface";
 import { clinicRepository } from "../repositories/clinic.repository";
+import { doctorRepository } from "../repositories/doctor.repository";
 
 class ClinicService {
     public async getAll(query: IQueryParams): Promise<IPaginatedResponse<IClinic>> {
@@ -62,6 +63,42 @@ class ClinicService {
         if (clinic) {
             throw new ApiError("Clinic is already exists", StatusCodesEnum.BAD_REQUEST);
         }
+    }
+
+    public async addDoctor(clinicId: string, doctorId: string): Promise<IClinic> {
+        const clinic = await clinicRepository.getById(clinicId);
+        if (!clinic) {
+            throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
+        }
+
+        if (clinic.doctors.includes(doctorId)) {
+            throw new ApiError(
+                `Doctor with ID=${doctorId} is already exists in current clinic`,
+                StatusCodesEnum.BAD_REQUEST,
+            );
+        }
+
+        await doctorRepository.addClinic(doctorId, clinicId);
+
+        return await clinicRepository.addDoctor(clinicId, doctorId);
+    }
+
+    public async removeDoctor(clinicId: string, doctorId: string): Promise<IClinic> {
+        const clinic = await clinicRepository.getById(clinicId);
+        if (!clinic) {
+            throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
+        }
+
+        if (!clinic.doctors.includes(doctorId)) {
+            throw new ApiError(
+                `Doctor with ID=${doctorId} not found in current clinic`,
+                StatusCodesEnum.NOT_FOUND,
+            );
+        }
+
+        await doctorRepository.removeClinic(doctorId, clinicId);
+
+        return await clinicRepository.removeDoctor(clinicId, doctorId);
     }
 }
 

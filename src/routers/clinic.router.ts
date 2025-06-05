@@ -32,5 +32,20 @@ router.delete(
     commonMiddleware.isIdValid("id"),
     clinicController.deleteById,
 );
+router.patch(
+    "/:id/doctors",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    clinicController.addDoctor,
+);
+router.patch(
+    "/:id/doctors/:doctorId",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    commonMiddleware.isIdValid("doctorId"),
+    clinicController.removeDoctor,
+);
 
 export const clinicRouter = router;

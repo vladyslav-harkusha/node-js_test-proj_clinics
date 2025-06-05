@@ -73,7 +73,6 @@ class DoctorController {
         try {
             const { id } = req.params;
             const { clinicId } = req.params;
-            console.log(req.params);
             const data = await doctorService.removeClinic(id, clinicId);
             res.status(StatusCodesEnum.OK).json(data);
         } catch (e) {

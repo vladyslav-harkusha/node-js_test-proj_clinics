@@ -14,7 +14,11 @@ class ClinicRepository {
         }
 
         return Promise.all([
-            Clinic.find(filterObject).limit(query.pageSize).skip(skip).sort(query.order),
+            Clinic.find(filterObject)
+                .limit(query.pageSize)
+                .skip(skip)
+                .sort(query.order)
+                .populate("doctors"),
             Clinic.find(filterObject).countDocuments(),
         ]);
     }
@@ -37,6 +41,22 @@ class ClinicRepository {
 
     public getByName(name: string): Promise<IClinic> {
         return Clinic.findOne({ name });
+    }
+
+    public addDoctor(clinicId: string, doctorId: string): Promise<IClinic> {
+        return Clinic.findByIdAndUpdate(
+            clinicId,
+            { $addToSet: { doctors: doctorId } },
+            { new: true },
+        ).populate("doctors");
+    }
+
+    public removeDoctor(clinicId: string, doctorId: string): Promise<IClinic> {
+        return Clinic.findByIdAndUpdate(
+            clinicId,
+            { $pull: { doctors: doctorId } },
+            { new: true },
+        ).populate("doctors");
     }
 }
 

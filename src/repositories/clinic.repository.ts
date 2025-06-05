@@ -3,17 +3,28 @@ import { FilterQuery } from "mongoose";
 import { IClinic, IClinicCreateDTO } from "../interfaces/clinic.interface";
 import { IQueryParams } from "../interfaces/query-params.interface";
 import { Clinic } from "../models/clinic.model";
+import { Doctor } from "../models/doctor.model";
 
 class ClinicRepository {
-    public getAll(query: IQueryParams): Promise<[IClinic[], number]> {
+    public async getAll(query: IQueryParams): Promise<[IClinic[], number]> {
         const skip = query.pageSize * (query.page - 1);
         const filterObject: FilterQuery<IClinic> = {};
 
         if (query.search) {
-            filterObject.$or = [{ name: { $regex: query.search, $options: "i" } }];
+            filterObject.name = { $regex: query.search, $options: "i" };
         }
 
-        return Promise.all([
+        if (query.doctorId) {
+            filterObject.doctors = query.doctorId;
+        }
+
+        if (query.specialtyId) {
+            const doctors = await Doctor.find({ specialties: query.specialtyId }, "_id");
+            const doctorIds = doctors.map((doc) => doc._id);
+            filterObject.doctors = { $in: doctorIds };
+        }
+
+        return await Promise.all([
             Clinic.find(filterObject)
                 .limit(query.pageSize)
                 .skip(skip)

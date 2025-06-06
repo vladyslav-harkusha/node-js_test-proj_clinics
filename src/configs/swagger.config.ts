@@ -687,6 +687,494 @@ const swaggerDocument: OpenAPIV3.Document = {
                 },
             },
         },
+        "/users/{id}/block": {
+            patch: {
+                summary: "Block user by ID",
+                description: "Only for role admin",
+                tags: ["Users"],
+                security: [
+                    {
+                        bearerAuth: [],
+                    },
+                ],
+                parameters: [
+                    {
+                        name: "id",
+                        in: "path",
+                        required: true,
+                        description: "User ID",
+                        schema: {
+                            type: "string",
+                        },
+                    },
+                ],
+                responses: {
+                    "200": {
+                        description: "User blocked",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        email: { type: "string" },
+                                        role: { type: "string" },
+                                        name: { type: "string" },
+                                        surname: { type: "string" },
+                                        age: { type: "number" },
+                                        avatar: { type: "string" },
+                                        isVerified: { type: "boolean", default: true },
+                                        isBlocked: { type: "boolean", default: true },
+                                        isDeleted: { type: "boolean", default: false },
+                                        _id: { type: "string" },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "401": {
+                        description: "Unauthorized",
+                    },
+                    "403": {
+                        description: "Access denied",
+                    },
+                    "404": {
+                        description: "User not found",
+                    },
+                },
+            },
+        },
+        "/users/{id}/unblock": {
+            patch: {
+                summary: "Unblock user by ID",
+                description: "Only for role admin",
+                tags: ["Users"],
+                security: [
+                    {
+                        bearerAuth: [],
+                    },
+                ],
+                parameters: [
+                    {
+                        name: "id",
+                        in: "path",
+                        required: true,
+                        description: "User ID",
+                        schema: {
+                            type: "string",
+                        },
+                    },
+                ],
+                responses: {
+                    "200": {
+                        description: "User unblocked",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        email: { type: "string" },
+                                        role: { type: "string" },
+                                        name: { type: "string" },
+                                        surname: { type: "string" },
+                                        age: { type: "number" },
+                                        avatar: { type: "string" },
+                                        isVerified: { type: "boolean", default: true },
+                                        isBlocked: { type: "boolean", default: false },
+                                        isDeleted: { type: "boolean", default: false },
+                                        _id: { type: "string" },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "401": {
+                        description: "Unauthorized",
+                    },
+                    "403": {
+                        description: "Access denied",
+                    },
+                    "404": {
+                        description: "User not found",
+                    },
+                },
+            },
+        },
+        "/clinics": {
+            get: {
+                summary: "Get list of clinics",
+                description: "Only authorized users",
+                tags: ["Clinics"],
+                security: [{ bearerAuth: [] }],
+                parameters: [
+                    {
+                        name: "doctorId",
+                        in: "query",
+                        description: "Filter clinics by doctorId",
+                        schema: {
+                            type: "string",
+                            example: "683f259d8a88061a1232c074",
+                        },
+                    },
+                    {
+                        name: "specialtyId",
+                        in: "query",
+                        description: "Filter clinics by medical specialties",
+                        schema: {
+                            type: "string",
+                            example: "683f259d8a88061a1232c074",
+                        },
+                    },
+                    {
+                        name: "pageSize",
+                        in: "query",
+                        description: "Number of items per page",
+                        schema: {
+                            type: "integer",
+                            example: 10,
+                        },
+                    },
+                    {
+                        name: "page",
+                        in: "query",
+                        description: "Page number",
+                        schema: {
+                            type: "integer",
+                            example: 1,
+                        },
+                    },
+                    {
+                        name: "order",
+                        in: "query",
+                        description: "sortField or -sortField, asc or desc",
+                        schema: {
+                            type: "string",
+                            example: "name",
+                        },
+                    },
+                    {
+                        name: "search",
+                        in: "query",
+                        description: "Search query",
+                        schema: {
+                            type: "string",
+                            example: "gmail",
+                        },
+                    },
+                ],
+                responses: {
+                    "200": {
+                        description: "All clinics by query params",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        totalItems: { type: "integer" },
+                                        totalPages: { type: "integer" },
+                                        prevPage: { type: "boolean" },
+                                        nextPage: { type: "boolean" },
+                                        data: {
+                                            type: "array",
+                                            items: {
+                                                type: "object",
+                                                properties: {
+                                                    _id: { type: "string" },
+                                                    name: { type: "string" },
+                                                    doctors: {
+                                                        type: "array",
+                                                        items: {
+                                                            type: "object",
+                                                            properties: {
+                                                                _id: { type: "string" },
+                                                                firstName: { type: "string" },
+                                                                lastName: { type: "string" },
+                                                                email: { type: "string" },
+                                                                phone: { type: "string" },
+                                                                clinics: {
+                                                                    type: "array",
+                                                                    items: { type: "string" },
+                                                                },
+                                                                specialties: {
+                                                                    type: "array",
+                                                                    items: { type: "string" },
+                                                                },
+                                                                createdAt: { type: "string" },
+                                                                updatedAt: { type: "string" },
+                                                            },
+                                                        },
+                                                    },
+                                                    createdAt: { type: "string" },
+                                                    updatedAt: { type: "string" },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "401": { description: "Unauthorized" },
+                    "403": { description: "Forbidden" },
+                },
+            },
+            post: {
+                summary: "Create a clinic",
+                description: "Only role admin",
+                tags: ["Clinics"],
+                security: [{ bearerAuth: [] }],
+                requestBody: {
+                    description: "Clinic data transfer object",
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    name: { type: "string" },
+                                },
+                            },
+                        },
+                    },
+                },
+                responses: {
+                    "201": {
+                        description: "Create new clinic",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        name: { type: "string" },
+                                        doctors: { type: "array", items: { type: "string" } },
+                                        _id: { type: "string" },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "401": { description: "Unauthorized" },
+                    "403": { description: "Forbidden" },
+                },
+            },
+        },
+        "/clinics/{id}": {
+            get: {
+                summary: "Get a clinic by ID",
+                description: "Only authorized users",
+                tags: ["Clinics"],
+                security: [{ bearerAuth: [] }],
+                parameters: [
+                    {
+                        name: "id",
+                        in: "path",
+                        required: true,
+                        description: "Clinic ID",
+                        schema: { type: "string" },
+                    },
+                ],
+                responses: {
+                    "200": {
+                        description: "Clinic by ID",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        _id: { type: "string" },
+                                        name: { type: "string" },
+                                        doctors: { type: "array", items: { type: "string" } },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "401": { description: "Unauthorized" },
+                    "403": { description: "Forbidden" },
+                    "404": { description: "Clinic not found" },
+                },
+            },
+            put: {
+                summary: "Update a clinic by ID",
+                description: "Only role admin",
+                tags: ["Clinics"],
+                security: [{ bearerAuth: [] }],
+                parameters: [
+                    {
+                        name: "id",
+                        in: "path",
+                        required: true,
+                        description: "Clinic ID",
+                        schema: { type: "string" },
+                    },
+                ],
+                requestBody: {
+                    description: "Clinic data for update",
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    name: { type: "string" },
+                                },
+                            },
+                        },
+                    },
+                },
+                responses: {
+                    "200": {
+                        description: "Clinic info updated",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        _id: { type: "string" },
+                                        name: { type: "string" },
+                                        doctors: { type: "array", items: { type: "string" } },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "401": { description: "Unauthorized" },
+                    "403": { description: "Forbidden" },
+                    "404": { description: "Clinic not found" },
+                },
+            },
+            delete: {
+                summary: "Delete a clinic by ID",
+                description: "Only role admin",
+                tags: ["Clinics"],
+                security: [{ bearerAuth: [] }],
+                parameters: [
+                    {
+                        name: "id",
+                        in: "path",
+                        required: true,
+                        description: "Clinic ID",
+                        schema: { type: "string" },
+                    },
+                ],
+                responses: {
+                    "204": { description: "Clinic was deleted, NO CONTENT" },
+                    "401": { description: "Unauthorized" },
+                    "403": { description: "Forbidden" },
+                    "404": { description: "Clinic not found" },
+                },
+            },
+        },
+        "/clinics/{id}/doctors": {
+            patch: {
+                summary: "Add doctor to clinic",
+                description: "Only role admin",
+                tags: ["Clinics"],
+                security: [{ bearerAuth: [] }],
+                parameters: [
+                    {
+                        name: "id",
+                        in: "path",
+                        required: true,
+                        description: "Clinic ID",
+                        schema: { type: "string" },
+                    },
+                ],
+                requestBody: {
+                    description: "Doctor ID",
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    doctorId: { type: "string" },
+                                },
+                            },
+                        },
+                    },
+                },
+                responses: {
+                    "200": {
+                        description: "Clinic's doctors updated",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        _id: { type: "string" },
+                                        name: { type: "string" },
+                                        doctors: { type: "array", items: { type: "string" } },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "400": { description: "Bad request" },
+                    "401": { description: "Unauthorized" },
+                    "403": { description: "Forbidden" },
+                    "404": { description: "Clinic not found" },
+                },
+            },
+        },
+        "/clinics/{id}/doctors/{doctorId}": {
+            patch: {
+                summary: "Delete doctor from clinic",
+                description: "Only role admin",
+                tags: ["Clinics"],
+                security: [{ bearerAuth: [] }],
+                parameters: [
+                    {
+                        name: "id",
+                        in: "path",
+                        required: true,
+                        description: "Clinic ID",
+                        schema: { type: "string" },
+                    },
+                    {
+                        name: "doctorId",
+                        in: "path",
+                        required: true,
+                        description: "Doctor ID",
+                        schema: { type: "string" },
+                    },
+                ],
+                responses: {
+                    "200": {
+                        description: "Clinic's doctors updated",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        _id: { type: "string" },
+                                        name: { type: "string" },
+                                        doctors: { type: "array", items: { type: "string" } },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "400": { description: "Bad request" },
+                    "401": { description: "Unauthorized" },
+                    "403": { description: "Forbidden" },
+                    "404": { description: "Clinic or Doctor not found" },
+                },
+            },
+        },
     },
     components: {
         securitySchemes: {

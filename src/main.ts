@@ -1,14 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import path from "node:path";
-
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 
 import { config } from "./configs/config";
-// import { cronRunner } from "./crons";
+import { swaggerDocument, swaggerUI } from "./configs/swagger.config";
 import { ApiError } from "./errors/api.error";
 import { apiRouter } from "./routers/api.router";
 
@@ -16,8 +14,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: ["http://localhost:3000"] }));
-app.use("/media", express.static(path.join(process.cwd(), "upload")));
 
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use("/", apiRouter);
 
 app.use("*", (err: ApiError, req: Request, res: Response, next: NextFunction) => {
@@ -52,7 +50,6 @@ const start = async () => {
         await dbConnection();
         app.listen(config.PORT, async () => {
             console.log(`Server is listening on port ${config.PORT}`);
-            // await cronRunner();
         });
     } catch (e) {
         console.log(e);

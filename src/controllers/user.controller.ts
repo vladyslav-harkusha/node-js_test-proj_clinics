@@ -78,17 +78,6 @@ class UserController {
             next(e);
         }
     }
-
-    public async uploadAvatar(req: Request, res: Response, next: NextFunction) {
-        try {
-            const { userId } = req.res.locals.tokenPayload as ITokenPayload;
-            const updatedUser = await userService.updateById(userId, { avatar: req.file.path });
-
-            res.status(StatusCodesEnum.OK).json(updatedUser);
-        } catch (e) {
-            next(e);
-        }
-    }
 }
 
 export const userController = new UserController();

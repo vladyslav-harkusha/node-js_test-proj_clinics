@@ -8,14 +8,24 @@ import { QueryParamsValidator } from "../validators/query-params.validator";
 
 const router = Router();
 
-router.get("/", commonMiddleware.query(QueryParamsValidator.query), doctorController.getAll);
-router.get("/:id", commonMiddleware.isIdValid("id"), doctorController.getById);
+router.get(
+    "/",
+    authMiddleware.checkAccessToken,
+    commonMiddleware.query(QueryParamsValidator.query),
+    doctorController.getAll,
+);
 router.post(
     "/",
     authMiddleware.checkAccessToken,
     authMiddleware.isAdmin,
     commonMiddleware.validateBody(DoctorValidator.create),
     doctorController.create,
+);
+router.get(
+    "/:id",
+    authMiddleware.checkAccessToken,
+    commonMiddleware.isIdValid("id"),
+    doctorController.getById,
 );
 router.put(
     "/:id",

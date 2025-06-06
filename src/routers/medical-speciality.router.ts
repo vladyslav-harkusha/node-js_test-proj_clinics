@@ -10,10 +10,16 @@ const router = Router();
 
 router.get(
     "/",
+    authMiddleware.checkAccessToken,
     commonMiddleware.query(QueryParamsValidator.query),
     medicalSpecialityController.getAll,
 );
-router.get("/:id", commonMiddleware.isIdValid("id"), medicalSpecialityController.getById);
+router.get(
+    "/:id",
+    authMiddleware.checkAccessToken,
+    commonMiddleware.isIdValid("id"),
+    medicalSpecialityController.getById,
+);
 router.post(
     "/",
     authMiddleware.checkAccessToken,

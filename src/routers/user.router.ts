@@ -8,11 +8,24 @@ import { UserValidator } from "../validators/user.validator";
 
 const router = Router();
 
-router.get("/", commonMiddleware.query(QueryParamsValidator.query), userController.getAll);
-router.get("/:id", commonMiddleware.isIdValid("id"), userController.getById);
+router.get(
+    "/",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.query(QueryParamsValidator.query),
+    userController.getAll,
+);
+router.get(
+    "/:id",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
+    userController.getById,
+);
 router.put(
     "/:id",
     authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
     commonMiddleware.isIdValid("id"),
     commonMiddleware.validateBody(UserValidator.update),
     userController.updateById,
@@ -20,6 +33,7 @@ router.put(
 router.delete(
     "/:id",
     authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
     commonMiddleware.isIdValid("id"),
     userController.deleteById,
 );
@@ -27,12 +41,14 @@ router.patch(
     "/:id/block",
     authMiddleware.checkAccessToken,
     authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
     userController.blockUser,
 );
 router.patch(
     "/:id/unblock",
     authMiddleware.checkAccessToken,
     authMiddleware.isAdmin,
+    commonMiddleware.isIdValid("id"),
     userController.unBlockUser,
 );
 

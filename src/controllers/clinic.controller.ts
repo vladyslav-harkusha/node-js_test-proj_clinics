@@ -58,6 +58,16 @@ class ClinicController {
         }
     }
 
+    public async getClinicSpecialties(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const data = await clinicService.getClinicSpecialties(id);
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async addDoctor(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;

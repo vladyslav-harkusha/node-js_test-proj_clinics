@@ -963,6 +963,47 @@ const swaggerDocument: OpenAPIV3.Document = {
                 },
             },
         },
+        "/clinics/{id}/specialties": {
+            get: {
+                summary: "Get all specialties of clinic",
+                description: "Only authorized users",
+                tags: ["Clinics"],
+                security: [{ bearerAuth: [] }],
+                parameters: [
+                    {
+                        name: "id",
+                        in: "path",
+                        required: true,
+                        description: "Clinic ID",
+                        schema: { type: "string" },
+                    },
+                ],
+                responses: {
+                    "200": {
+                        description: "All clinic specialties",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "array",
+                                    items: {
+                                        type: "object",
+                                        properties: {
+                                            _id: { type: "string" },
+                                            name: { type: "string" },
+                                            createdAt: { type: "string" },
+                                            updatedAt: { type: "string" },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "401": { description: "Unauthorized" },
+                    "403": { description: "Forbidden" },
+                    "404": { description: "Clinic not found" },
+                },
+            },
+        },
         "/clinics/{id}": {
             get: {
                 summary: "Get a clinic by ID",

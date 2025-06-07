@@ -1,10 +1,13 @@
 import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { ApiError } from "../errors/api.error";
 import { IClinic, IClinicCreateDTO } from "../interfaces/clinic.interface";
+import { IMedicalSpeciality } from "../interfaces/medical-speciality.interface";
 import { IPaginatedResponse } from "../interfaces/paginated-response.interface";
 import { IQueryParams } from "../interfaces/query-params.interface";
+import { Clinic } from "../models/clinic.model";
 import { clinicRepository } from "../repositories/clinic.repository";
 import { doctorRepository } from "../repositories/doctor.repository";
+import { medicalSpecialityRepository } from "../repositories/medical-speciality.repository";
 
 class ClinicService {
     public async getAll(query: IQueryParams): Promise<IPaginatedResponse<IClinic>> {
@@ -63,6 +66,19 @@ class ClinicService {
         if (clinic) {
             throw new ApiError("Clinic is already exists", StatusCodesEnum.BAD_REQUEST);
         }
+    }
+
+    public async getClinicSpecialties(clinicId: string): Promise<IMedicalSpeciality[]> {
+        const clinic = await Clinic.findById(clinicId).populate("doctors");
+
+        if (!clinic) {
+            throw new ApiError("Clinic not found", StatusCodesEnum.NOT_FOUND);
+        }
+
+        const allSpecialtyIds = clinic.doctors.flatMap((doctor: any) => doctor.specialties);
+        const uniqueIds = [...new Set(allSpecialtyIds)];
+
+        return await medicalSpecialityRepository.getByIds(uniqueIds);
     }
 
     public async addDoctor(clinicId: string, doctorId: string): Promise<IClinic> {

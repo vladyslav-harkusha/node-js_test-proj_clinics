@@ -42,6 +42,12 @@ router.delete(
     commonMiddleware.isIdValid("id"),
     clinicController.deleteById,
 );
+router.get(
+    "/:id/specialties",
+    authMiddleware.checkAccessToken,
+    commonMiddleware.isIdValid("id"),
+    clinicController.getClinicSpecialties,
+);
 router.patch(
     "/:id/doctors",
     authMiddleware.checkAccessToken,

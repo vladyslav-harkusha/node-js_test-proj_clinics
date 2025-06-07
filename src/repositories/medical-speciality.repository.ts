@@ -30,6 +30,10 @@ class MedicalSpecialityRepository {
         return MedicalSpeciality.findById(medSpecId);
     }
 
+    public getByIds(medSpecIds: string[]): Promise<IMedicalSpeciality[]> {
+        return MedicalSpeciality.find({ _id: { $in: medSpecIds } });
+    }
+
     public updateById(
         medSpecId: string,
         newMedSpec: Partial<IMedicalSpeciality>,

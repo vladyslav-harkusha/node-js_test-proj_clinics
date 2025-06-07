@@ -1,0 +1,1623 @@
+{
+	"info": {
+		"_postman_id": "ec9f51d4-cad1-4159-a573-16b55fe03c50",
+		"name": "NodeJS_Test_Clinics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26332054"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "auth/sign-up",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "vladys.harkusha@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Pa$$word1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Vladys",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Adminenko",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "37",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/sign-up",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth/sign-in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"pm.environment.set(\"accessToken\", res.tokens.accessToken);\r",
+									"pm.environment.set(\"refreshToken\", res.tokens.refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "vladys.harkusha@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Pa$$word1",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "anasteysha1@gmail.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth/me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth/refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"pm.environment.set(\"accessToken\", res.accessToken);\r",
+									"pm.environment.set(\"refreshToken\", res.refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "refreshToken",
+									"value": "{{refreshToken}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/refresh",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify account",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/verify/:token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"verify",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQzZTFjZWZmMDEwYTMzN2E4MzRjZTEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0OTI3OTE4MiwiZXhwIjoxNzQ5MjgyNzgyfQ.v12tGGWYq6rKVFTm_6T4m7O7XzQeUBYeVH0WsXwNP2Q"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recovery password request",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "vladys.harkusha@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/recovery",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"recovery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recovery password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "Pa$$word11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/recovery/:token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"recovery",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5OTRkN2Y1YjliNGIyMjk3YWEyOWUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDg2MDQ3NjgsImV4cCI6MTc0ODYwNTM2OH0.9qrWW_dYVAcNzlQwtnOzPr_EuJGwwc0fW4oGcEeB0Wg"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "get all users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "To delete",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Butterfly",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "19",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6839a281905055fc069f4029"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Lil",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Pip",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "49",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "67dc36b9ec27d87dda747a88"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/67e40e17f0076b3f8f0ad295",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"67e40e17f0076b3f8f0ad295"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "block user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id/block",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"block"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6839a281905055fc069f4029"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unblock user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/68399801f5b9b4b2297aa2ad/unblock",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"68399801f5b9b4b2297aa2ad",
+								"unblock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload-avatar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/Admin/Desktop/react1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/upload-avatar/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"upload-avatar",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "67f8ea50fcaa65b50e1ec1fb"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "clinics",
+			"item": [
+				{
+					"name": "get all clinics",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Peter",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Parker",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "20",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "first",
+									"disabled": true
+								},
+								{
+									"key": "specialtyId",
+									"value": "683ee91598f481f41167a988",
+									"disabled": true
+								},
+								{
+									"key": "doctorId",
+									"value": "683f25f28a88061a1232c08b",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-name",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get clinic specialties",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics/:id/specialties",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								":id",
+								"specialties"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f23fe9b47467e36aed1b4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create clinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Fifth Clinic",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get clinic by ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f23fe9b47467e36aed1b4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update clinic by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Third Clinic",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f241c9b47467e36aed1be"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete clinic by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/clinics/683ee8ea98f481f41167a96f",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								"683ee8ea98f481f41167a96f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add doctor to clinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "doctorId",
+									"value": "683f259d8a88061a1232c074",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics/:id/doctors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								":id",
+								"doctors"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f241c9b47467e36aed1be"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete doctor from clinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics/:id/doctors/:doctorId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								":id",
+								"doctors",
+								":doctorId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f23fe9b47467e36aed1b4"
+								},
+								{
+									"key": "doctorId",
+									"value": "683f25f28a88061a1232c08b"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "doctors",
+			"item": [
+				{
+					"name": "get all doctors",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								""
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "-firstName",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "email3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "email5@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+38000000005",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "Fifth",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Doctor",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get doctor by ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f25f28a88061a1232c08b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update doctor by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "First",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f259d8a88061a1232c074"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete doctor by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/doctors/683ee8ea98f481f41167a96f",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								"683ee8ea98f481f41167a96f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add doctor's clinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "clinicId",
+									"value": "683f23fe9b47467e36aed1b4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/clinics",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								":id",
+								"clinics"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f25d18a88061a1232c081"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove doctor's clinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/clinics/:clinicId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								":id",
+								"clinics",
+								":clinicId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f259d8a88061a1232c074"
+								},
+								{
+									"key": "clinicId",
+									"value": "683f241c9b47467e36aed1be"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add doctor's specialty",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "specialtyId",
+									"value": "6843e416ff010a337a834d1e",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/specialties",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								":id",
+								"specialties"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6843e34cff010a337a834cfd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove doctor's specialty",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/specialties/:specialtyId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								":id",
+								"specialties",
+								":specialtyId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683f259d8a88061a1232c074"
+								},
+								{
+									"key": "specialtyId",
+									"value": "683ee8fc98f481f41167a979"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "specialties",
+			"item": [
+				{
+					"name": "get all specialities",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/specialties/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"specialties",
+								""
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "-name",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "th",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create speciality",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Oncology",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/specialties/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"specialties",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get speciality by ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "To delete",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Butterfly",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "19",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/specialties/683ee8ea98f481f41167a96f",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"specialties",
+								"683ee8ea98f481f41167a96f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update speciality by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Cucumber",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/specialties/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"specialties",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "683ee8ea98f481f41167a96f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete speciality by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2RkNDcyNzYxYjQ1MmFmN2RkN2E1YTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU1NTE1OCwiZXhwIjoxNzQyNTU1NzU4fQ.ZKIfyDITjZllltclCLZDmA9nj2on7pdQF3wwmj9FD9Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/specialties/683ee8ea98f481f41167a96f",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"specialties",
+								"683ee8ea98f481f41167a96f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

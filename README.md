@@ -31,10 +31,12 @@ npm run start
 
 ### 1. Postman collection
 Import related postman collection from directory /postman
+
 File: NodeJS_Test_Clinics.postman_collection.json
 
 ### 2. Postman environment
 Import and set required environment from directory /postman
+
 File: node-lessons.postman_environment.json
 
 ### 3. Use created user with admin role to have access for endpoints with root:admin

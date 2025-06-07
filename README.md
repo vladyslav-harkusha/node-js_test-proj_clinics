@@ -41,3 +41,6 @@ File: node-lessons.postman_environment.json
 
 ### 3. Use created user with admin role to have access for endpoints with root:admin
 Можна або логінитись наявними адмінами (user1@gmail.com, Pa$$word1), або вручну змінити поле role на значення admin
+
+- ## Swagger
+### Swagger documentation url: http://localhost:7000/docs/

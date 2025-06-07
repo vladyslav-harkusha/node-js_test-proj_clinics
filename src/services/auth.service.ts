@@ -68,6 +68,8 @@ class AuthService {
 
     public async verifyAccount(token: string): Promise<IUser> {
         const { userId } = tokenService.verifyToken(token, ActionTokenTypeEnum.ACTIVATE);
+        const { name, email } = await userRepository.getById(userId);
+        await emailService.sendEmail(email, emailConstants[EmailEnum.THANKS], { name });
 
         return await userService.updateById(userId, { isVerified: true });
     }

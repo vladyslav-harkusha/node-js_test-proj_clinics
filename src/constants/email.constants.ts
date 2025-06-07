@@ -10,7 +10,7 @@ type IEmailConstants<T extends Record<string, string>> = {
 };
 
 export const emailConstants: IEmailConstants<typeof EmailEnum> = {
-    [EmailEnum.WELCOME]: { subject: "Welcome", template: "welcome" },
+    [EmailEnum.THANKS]: { subject: "Thanks for join us", template: "thanks" },
     [EmailEnum.ACTIVATE]: { subject: "Activate Your Account", template: "activate" },
     [EmailEnum.RECOVERY]: { subject: "Recovery Password", template: "recovery" },
 };
